@@ -24,8 +24,26 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  DateTime _selectedDate = DateTime.now();
+  TextEditingController _tanggalLahirController = TextEditingController();
+
+  Future<DateTime?> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(1970),
+      lastDate: DateTime(2030),
+    );
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+      });
+    }
+    return picked; // Mengembalikan nilai DateTime yang dipilih
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,40 +56,59 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(
-              controller: _nameController,
-              decoration: InputDecoration(labelText: 'Name'),
-            ),
+            buildTextField(_nameController, 'Name'),
             SizedBox(height: 16.0),
-            TextField(
-              controller: _emailController,
-              decoration: InputDecoration(labelText: 'Email'),
-              keyboardType: TextInputType.emailAddress,
-            ),
+            buildTextField(_usernameController, 'Username'),
             SizedBox(height: 16.0),
-            TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
-              obscureText: true,
+            buildTextField(_emailController, 'Email',
+                keyboardType: TextInputType.emailAddress),
+            SizedBox(height: 16.0),
+            buildTextField(_passwordController, 'Password', obscureText: true),
+            SizedBox(height: 32.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: buildTextField(
+                      _tanggalLahirController, 'Tanggal lahir',
+                      readOnly: true),
+                ),
+                SizedBox(width: 16.0),
+                ElevatedButton(
+                  onPressed: () => _selectDate(context),
+                  child: Text('Select date'),
+                ),
+              ],
             ),
             SizedBox(height: 32.0),
             ElevatedButton(
-              onPressed: () {
-                // TODO: Implement registration logic
-                String name = _nameController.text;
-                String email = _emailController.text;
-                String password = _passwordController.text;
-
-                // Add your registration logic here
-                // For example, you can send the data to a server or store it locally.
-
-                // For now, print the values to the console
-                print('Name: $name, Email: $email, Password: $password');
+              onPressed: () async {
+                DateTime? selectedDate = await _selectDate(context);
+                if (selectedDate != null) {
+                  // Implement registration logic
+                  // ...
+                }
               },
               child: Text('Register'),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget buildTextField(TextEditingController controller, String labelText,
+      {TextInputType keyboardType = TextInputType.text,
+      bool obscureText = false,
+      bool readOnly = false}) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(labelText: labelText),
+        keyboardType: keyboardType,
+        obscureText: obscureText,
+        readOnly: readOnly,
       ),
     );
   }
