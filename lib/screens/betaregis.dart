@@ -2,25 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:date_field/date_field.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
-class RegistrationScreen extends StatefulWidget {
-  const RegistrationScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatefulWidget {
+  static String routeName = "/register";
+  const RegisterScreen({super.key});
   @override
-  _RegistrationScreenState createState() => _RegistrationScreenState();
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _RegistrationScreenState extends State<RegistrationScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   Map userData = {};
   // final _formkey = GlobalKey<FormState>();
 
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? _selectedGender;
   String? _selectedAgama;
   DateTime _selectedDate = DateTime.now();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   // final TextEditingController _nameController = TextEditingController();
   // final TextEditingController _usernameController = TextEditingController();
   // final TextEditingController _emailController = TextEditingController();
   // final TextEditingController _passwordController = TextEditingController();
-  TextEditingController _tanggalLahirController = TextEditingController();
+  final TextEditingController _tanggalLahirController = TextEditingController();
 
   Future<DateTime?> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -125,7 +126,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   obscureText: true,
                   validator: MultiValidator([
                     RequiredValidator(errorText: 'Masukkan Password'),
-                    EmailValidator(errorText: 'Please correct password filled'),
+                    MinLengthValidator(3,
+                        errorText: 'Minimum 3 charecter filled password'),
                   ]),
                   decoration: InputDecoration(
                       hintText: 'Password',
@@ -318,20 +320,4 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       ),
     );
   }
-}
-
-Widget buildTextField(TextEditingController controller, String labelText,
-    {TextInputType keyboardType = TextInputType.text,
-    bool obscureText = false,
-    bool readOnly = false}) {
-  return Container(
-    width: double.infinity,
-    child: TextField(
-      controller: controller,
-      decoration: InputDecoration(labelText: labelText),
-      keyboardType: keyboardType,
-      obscureText: obscureText,
-      readOnly: readOnly,
-    ),
-  );
 }

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 // import 'package:date_field/date_field.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:login_project/components/LoginComponent.dart';
 import 'package:login_project/size_config.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _LoginScreenState createState() => _LoginScreenState();
 }
 
@@ -59,7 +61,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   obscureText: true,
                   validator: MultiValidator([
                     RequiredValidator(errorText: 'Masukkan password'),
-                    EmailValidator(errorText: 'Please correct password filled'),
+                    MinLengthValidator(3,
+                        errorText: 'Minimum 3 charecter filled password'),
                   ]),
                   decoration: InputDecoration(
                       hintText: 'Password',
