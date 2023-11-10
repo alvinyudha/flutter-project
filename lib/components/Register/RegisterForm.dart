@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:form_field_validator/form_field_validator.dart';
-import 'package:login_project/components/custom_surfix_icon.dart';
-import 'package:login_project/constant.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});

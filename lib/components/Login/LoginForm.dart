@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:get/get.dart';
 import 'package:login_project/components/button_custom_color.dart';
 import 'package:login_project/components/custom_surfix_icon.dart';
 import 'package:login_project/constant.dart';
+import 'package:login_project/screens/RegisterScreen.dart';
 import 'package:login_project/size_config.dart';
 
 class LoginForm extends StatefulWidget {
@@ -14,8 +16,8 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
-  // String? username;
-  // String? password;
+  String? username;
+  String? password;
   bool? remember = false;
   TextEditingController txtUsername = TextEditingController(),
       txtPassword = TextEditingController();
@@ -73,7 +75,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           TextButton(
             onPressed: () {
-              Navigator.pushNamed(context, '/register');
+              Get.to(RegisterScreen());
             },
             child: Text(
               "Belum punya akun? Daftar Sekarang",

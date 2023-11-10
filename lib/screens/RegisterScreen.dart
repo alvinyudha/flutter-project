@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:date_field/date_field.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:get/get.dart';
 import 'package:login_project/components/button_custom_color.dart';
 import 'package:login_project/components/custom_surfix_icon.dart';
 import 'package:login_project/constant.dart';
+import 'package:login_project/screens/LoginScreen.dart';
 import 'package:login_project/size_config.dart';
 
 class RegisterScreen extends StatefulWidget {
-  static String routeName = "/register";
+  // static String routeName = "/register";
   const RegisterScreen({super.key});
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
@@ -56,7 +58,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
           key: _formKey, // Tambahkan _formKey ke Form
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
+            children: [
+              SizedBox(height: SizeConfig.screenHeight * 0.04),
+              SizedBox(height: SizeConfig.screenHeight * 0.04),
+              Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Registrasi',
+                      style: TextStyle(fontSize: 35),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
@@ -309,7 +327,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/login');
+                  Get.to(LoginScreen());
                 },
                 child: Text(
                   'Login kembali',
