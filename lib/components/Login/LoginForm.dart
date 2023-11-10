@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
+import 'package:login_project/components/TambahKaryawan/AddKaryawan.dart';
 import 'package:login_project/components/button_custom_color.dart';
 import 'package:login_project/components/custom_surfix_icon.dart';
 import 'package:login_project/constant.dart';
@@ -65,10 +66,7 @@ class _LoginFormState extends State<LoginForm> {
               color: kPrimaryColor,
               text: "MASUK",
               press: () async {
-                if (_formKey.currentState?.validate() ?? false) {
-                  // Jika form valid, implementasi logika registrasi
-                  // ...
-                }
+                Get.to(TambahDataKaryawanPage());
               }),
           SizedBox(
             height: 20,
