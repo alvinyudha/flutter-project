@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:login_project/constant.dart';
+import 'package:get/get.dart';
+import 'package:login_project/components/CariKaryawan/SearchKaryawan.dart';
 
 class TambahDataKaryawanPage extends StatefulWidget {
   static String routeName = "/addkaryawan";
@@ -34,9 +36,9 @@ class _TambahDataKaryawanPageState extends State<TambahDataKaryawanPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                TextFormField(
+                buildFormField(
                   controller: _namaController,
-                  decoration: InputDecoration(labelText: 'Nama'),
+                  labelText: 'Nama',
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Nama tidak boleh kosong';
@@ -44,9 +46,9 @@ class _TambahDataKaryawanPageState extends State<TambahDataKaryawanPage> {
                     return null;
                   },
                 ),
-                TextFormField(
+                buildFormField(
                   controller: _nipController,
-                  decoration: InputDecoration(labelText: 'NIP'),
+                  labelText: 'NIP',
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'NIP tidak boleh kosong';
@@ -54,24 +56,19 @@ class _TambahDataKaryawanPageState extends State<TambahDataKaryawanPage> {
                     return null;
                   },
                 ),
-                DropdownButtonFormField(
+                buildDropdownFormField(
                   value: _selectedJenisKelamin,
-                  items: ['Laki-laki', 'Perempuan']
-                      .map((jenisKelamin) => DropdownMenuItem(
-                            value: jenisKelamin,
-                            child: Text(jenisKelamin),
-                          ))
-                      .toList(),
+                  items: ['Laki-laki', 'Perempuan'],
                   onChanged: (value) {
                     setState(() {
-                      _selectedJenisKelamin = value as String?;
+                      _selectedJenisKelamin = value;
                     });
                   },
-                  decoration: InputDecoration(labelText: 'Jenis Kelamin'),
+                  labelText: 'Jenis Kelamin',
                 ),
-                TextFormField(
+                buildFormField(
                   controller: _alamatController,
-                  decoration: InputDecoration(labelText: 'Alamat'),
+                  labelText: 'Alamat',
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Alamat tidak boleh kosong';
@@ -79,9 +76,9 @@ class _TambahDataKaryawanPageState extends State<TambahDataKaryawanPage> {
                     return null;
                   },
                 ),
-                TextFormField(
+                buildFormField(
                   controller: _divisiController,
-                  decoration: InputDecoration(labelText: 'Divisi'),
+                  labelText: 'Divisi',
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Divisi tidak boleh kosong';
@@ -89,9 +86,9 @@ class _TambahDataKaryawanPageState extends State<TambahDataKaryawanPage> {
                     return null;
                   },
                 ),
-                TextFormField(
+                buildFormField(
                   controller: _jabatanController,
-                  decoration: InputDecoration(labelText: 'Jabatan'),
+                  labelText: 'Jabatan',
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Jabatan tidak boleh kosong';
@@ -99,9 +96,9 @@ class _TambahDataKaryawanPageState extends State<TambahDataKaryawanPage> {
                     return null;
                   },
                 ),
-                TextFormField(
+                buildFormField(
                   controller: _tahunMasukController,
-                  decoration: InputDecoration(labelText: 'Tahun Masuk'),
+                  labelText: 'Tahun Masuk',
                   keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -129,24 +126,20 @@ class _TambahDataKaryawanPageState extends State<TambahDataKaryawanPage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            backgroundColor: kPrimaryColor,
+          buildBottomNavigationBarItem(
+            icon: Icons.home,
             label: 'Dashboard',
           ),
-          BottomNavigationBarItem(
-            backgroundColor: kPrimaryColor,
-            icon: Icon(Icons.person_add),
+          buildBottomNavigationBarItem(
+            icon: Icons.person_add,
             label: 'Tambah Karyawan',
           ),
-          BottomNavigationBarItem(
-            backgroundColor: kPrimaryColor,
-            icon: Icon(Icons.search),
+          buildBottomNavigationBarItem(
+            icon: Icons.search,
             label: 'Cari Karyawan',
           ),
-          BottomNavigationBarItem(
-            backgroundColor: kPrimaryColor,
-            icon: Icon(Icons.people),
+          buildBottomNavigationBarItem(
+            icon: Icons.people,
             label: 'Data Karyawan',
           ),
         ],
@@ -161,6 +154,7 @@ class _TambahDataKaryawanPageState extends State<TambahDataKaryawanPage> {
               break;
             case 2:
               // Navigasi ke halaman Cari Karyawan
+              Get.to(CariKaryawanPage()); // Gantilah dengan rute yang sesuai
               break;
             case 3:
               // Navigasi ke halaman Data Karyawan
@@ -168,6 +162,62 @@ class _TambahDataKaryawanPageState extends State<TambahDataKaryawanPage> {
           }
         },
       ),
+    );
+  }
+
+  Widget buildFormField({
+    required TextEditingController controller,
+    required String labelText,
+    TextInputType? keyboardType,
+    String? Function(String?)? validator,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: labelText,
+          border: OutlineInputBorder(),
+        ),
+        keyboardType: keyboardType,
+        validator: validator,
+      ),
+    );
+  }
+
+  Widget buildDropdownFormField({
+    required String? value,
+    required List<String> items,
+    required void Function(String?)? onChanged,
+    required String labelText,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: DropdownButtonFormField<String>(
+        value: value,
+        items: items
+            .map((item) => DropdownMenuItem<String>(
+                  value: item,
+                  child: Text(item),
+                ))
+            .toList(),
+        onChanged: onChanged,
+        decoration: InputDecoration(
+          labelText: labelText,
+          border: OutlineInputBorder(),
+        ),
+      ),
+    );
+  }
+
+  BottomNavigationBarItem buildBottomNavigationBarItem({
+    required IconData icon,
+    required String label,
+  }) {
+    return BottomNavigationBarItem(
+      icon: Icon(icon),
+      backgroundColor: kPrimaryColor,
+      label: label,
     );
   }
 }
