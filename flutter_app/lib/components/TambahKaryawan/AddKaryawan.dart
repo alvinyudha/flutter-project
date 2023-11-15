@@ -151,6 +151,7 @@ class _TambahDataKaryawanPageState extends State<TambahDataKaryawanPage> {
               break;
             case 1:
               // Navigasi ke halaman Tambah Karyawan
+              Get.to(TambahDataKaryawanPage());
               break;
             case 2:
               // Navigasi ke halaman Cari Karyawan

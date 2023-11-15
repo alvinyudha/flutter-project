@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:login_project/components/TambahKaryawan/AddKaryawan.dart';
 import 'package:login_project/constant.dart';
+import 'package:get/get.dart';
+import 'package:login_project/components/DataKaryawan/DataKaryawan.dart';
 
 class CariKaryawanPage extends StatefulWidget {
   static String routeName = "/searchkaryawan";
@@ -74,6 +77,7 @@ class _CariKaryawanPageState extends State<CariKaryawanPage> {
               break;
             case 1:
               // Navigasi ke halaman Tambah Karyawan
+              Get.to(TambahDataKaryawanPage());
               break;
             case 2:
               // Navigasi ke halaman Cari Karyawan
@@ -137,7 +141,15 @@ class _CariKaryawanPageState extends State<CariKaryawanPage> {
                 icon: Icon(Icons.edit),
                 onPressed: () {
                   // Navigasi ke halaman edit data karyawan
-                  // Implementasi navigasi ke halaman EditDataKaryawan
+                  // Implementasi navigasi ke halaman DataKaryawanPage dengan menyertakan data karyawan
+                  Get.to(
+                    DataKaryawanPage(
+                      karyawanData: {
+                        'Nama': _filteredKaryawanList[index],
+                        'NIP': 'NIP Karyawan'
+                      }, // Gantilah NIP Karyawan dengan nilai NIP yang sesuai
+                    ),
+                  );
                 },
               ),
             ],
