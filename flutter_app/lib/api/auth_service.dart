@@ -4,7 +4,7 @@ import 'package:login_project/api/servicesURL.dart';
 
 class AuthServices {
   static Future<http.Response> register(
-      String name, String email, String password) async {
+      String name, String email, String password, String username) async {
     Map data = {
       "name": name,
       "username": name,

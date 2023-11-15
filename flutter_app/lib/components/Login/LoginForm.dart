@@ -35,15 +35,16 @@ class _LoginFormState extends State<LoginForm> {
       http.Response response = await AuthServices.login(_email, _password);
       Map responseMap = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        Get.to(DashboardPage(
+        Get.to(const DashboardPage(
           totalKaryawan: 0,
           karyawanCuti: 8,
         ));
       } else {
+        // ignore: use_build_context_synchronously
         errorSnackBar(context, responseMap.values.first);
       }
     } else {
-      errorSnackBar(context, 'enter all required fields');
+      errorSnackBar(context, 'harap masukkan email dan password');
     }
   }
 
@@ -70,18 +71,18 @@ class _LoginFormState extends State<LoginForm> {
                       remember = value;
                     });
                   }),
-              Text("Tetap Masuk"),
-              Spacer(),
+              const Text("Tetap Masuk"),
+              const Spacer(),
               GestureDetector(
                 onTap: () {},
-                child: Text(
+                child: const Text(
                   "Lupa Password",
                   style: TextStyle(decoration: TextDecoration.underline),
                 ),
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           DefaultButtonCustomeColor(
@@ -89,14 +90,14 @@ class _LoginFormState extends State<LoginForm> {
             text: "MASUK",
             press: () => loginPressed(),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           TextButton(
             onPressed: () {
-              Get.to(RegisterScreen());
+              Get.to(const RegisterScreen());
             },
-            child: Text(
+            child: const Text(
               "Belum punya akun? Daftar Sekarang",
               style: TextStyle(
                   decoration: TextDecoration.underline, color: kPrimaryColor),
@@ -126,8 +127,9 @@ class _LoginFormState extends State<LoginForm> {
           labelStyle: TextStyle(
               color: focusNode.hasFocus ? mSubtitleColor : kPrimaryColor),
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          errorStyle: TextStyle(fontSize: 15.0),
-          suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/User.svg")),
+          errorStyle: const TextStyle(fontSize: 15.0),
+          suffixIcon:
+              const CustomSurffixIcon(svgIcon: "assets/icons/User.svg")),
     );
   }
 
@@ -150,8 +152,8 @@ class _LoginFormState extends State<LoginForm> {
         labelStyle: TextStyle(
             color: focusNode.hasFocus ? mSubtitleColor : kPrimaryColor),
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        errorStyle: TextStyle(fontSize: 15.0),
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
+        errorStyle: const TextStyle(fontSize: 15.0),
+        suffixIcon: const CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
       ),
     );
   }
