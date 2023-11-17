@@ -7,7 +7,7 @@ import 'package:login_project/constant.dart';
 
 void main() {
   runApp(
-    const MaterialApp(
+    const GetMaterialApp(
       home: NavigationMenu(),
     ),
   );
@@ -21,24 +21,53 @@ class NavigationMenu extends StatelessWidget {
     final controller = Get.put(NavigationController());
 
     return Scaffold(
-      bottomNavigationBar: Obx(
-        () => NavigationBar(
-          backgroundColor: kPrimaryColor,
-          height: 70,
-          elevation: 0,
-          selectedIndex: controller.selectedIndex.value,
-          onDestinationSelected: (index) =>
-              controller.selectedIndex.value = index,
-          destinations: const [
-            NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
-            NavigationDestination(
-                icon: Icon(Iconsax.calendar), label: 'Ajukan Cuti'),
-            NavigationDestination(
-                icon: Icon(Iconsax.clipboard_text), label: 'Absensi'),
-            NavigationDestination(
-                icon: Icon(Iconsax.calendar_add), label: 'Ajukan Surat'),
-            NavigationDestination(icon: Icon(Iconsax.user), label: 'Profile'),
-          ],
+      bottomNavigationBar: NavigationBarTheme(
+        data: NavigationBarThemeData(
+            labelTextStyle: MaterialStatePropertyAll(
+                const TextStyle(fontWeight: FontWeight.bold))),
+        child: Obx(
+          () => NavigationBar(
+            backgroundColor: Colors.white,
+            height: 70,
+            elevation: 0,
+            animationDuration: const Duration(seconds: 1),
+            labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+            selectedIndex: controller.selectedIndex.value,
+            onDestinationSelected: (index) =>
+                controller.selectedIndex.value = index,
+            destinations: const [
+              NavigationDestination(
+                  icon: Icon(
+                    Iconsax.home,
+                    color: kPrimaryColor,
+                  ),
+                  label: 'Home'),
+              NavigationDestination(
+                  icon: Icon(
+                    Iconsax.calendar,
+                    color: kPrimaryColor,
+                  ),
+                  label: 'Ajukan Cuti'),
+              NavigationDestination(
+                  icon: Icon(
+                    Iconsax.clipboard_text,
+                    color: kPrimaryColor,
+                  ),
+                  label: 'Absensi'),
+              NavigationDestination(
+                  icon: Icon(
+                    Iconsax.calendar_add,
+                    color: kPrimaryColor,
+                  ),
+                  label: 'Ajukan Surat'),
+              NavigationDestination(
+                  icon: Icon(
+                    Iconsax.user,
+                    color: kPrimaryColor,
+                  ),
+                  label: 'Profile'),
+            ],
+          ),
         ),
       ),
       body: Obx(() => controller.screens[controller.selectedIndex.value]),
