@@ -209,7 +209,9 @@ class _RegisterFormState extends State<RegisterForm> {
                 },
                 child: const Text(
                   'Login kembali',
-                  style: TextStyle(fontSize: 15),
+                  style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      color: kPrimaryColor),
                 ),
               ),
             ],

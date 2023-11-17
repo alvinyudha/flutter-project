@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class PengajuanCutiPage extends StatefulWidget {
-  static String routeName = "/pengajuancuti";
   final Map<String, String> karyawanData;
 
   const PengajuanCutiPage({Key? key, required this.karyawanData})
@@ -272,14 +271,4 @@ class _PengajuanCutiPageState extends State<PengajuanCutiPage> {
       },
     );
   }
-}
-
-void main() {
-  runApp(
-    MaterialApp(
-      home: PengajuanCutiPage(
-        karyawanData: {},
-      ),
-    ),
-  );
 }

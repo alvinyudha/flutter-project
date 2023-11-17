@@ -5,11 +5,10 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:login_project/api/auth_service.dart';
 import 'package:login_project/api/servicesURL.dart';
-// import 'package:login_project/components/TambahKaryawan/AddKaryawan.dart';
-import 'package:login_project/components/Dashboard/Dashboard.dart';
 import 'package:login_project/components/button_custom_color.dart';
 import 'package:login_project/components/custom_surfix_icon.dart';
 import 'package:login_project/constant.dart';
+import 'package:login_project/screens/NavigationMenu.dart';
 import 'package:login_project/screens/RegisterScreen.dart';
 import 'package:login_project/size_config.dart';
 import 'package:http/http.dart' as http;
@@ -35,10 +34,7 @@ class _LoginFormState extends State<LoginForm> {
       http.Response response = await AuthServices.login(_email, _password);
       Map responseMap = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        Get.to(const DashboardPage(
-          totalKaryawan: 0,
-          karyawanCuti: 8,
-        ));
+        Get.to(const NavigationMenu());
       } else {
         // ignore: use_build_context_synchronously
         errorSnackBar(context, responseMap.values.first);
