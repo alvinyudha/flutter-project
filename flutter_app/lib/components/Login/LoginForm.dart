@@ -5,12 +5,12 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:login_project/api/auth_service.dart';
 import 'package:login_project/api/servicesURL.dart';
-import 'package:login_project/components/button_custom_color.dart';
-import 'package:login_project/components/custom_surfix_icon.dart';
-import 'package:login_project/constant.dart';
+import 'package:login_project/utilities/button_custom_color.dart';
+import 'package:login_project/utilities/custom_surfix_icon.dart';
+import 'package:login_project/utilities/constant.dart';
 import 'package:login_project/screens/NavigationMenu.dart';
 import 'package:login_project/screens/RegisterScreen.dart';
-import 'package:login_project/size_config.dart';
+import 'package:login_project/utilities/size_config.dart';
 import 'package:http/http.dart' as http;
 
 class LoginForm extends StatefulWidget {

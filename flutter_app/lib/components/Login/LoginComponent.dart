@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:login_project/components/Login/LoginForm.dart';
-import 'package:login_project/constant.dart';
-import 'package:login_project/size_config.dart';
+import 'package:login_project/utilities/constant.dart';
+import 'package:login_project/utilities/size_config.dart';
 import 'package:simple_shadow/simple_shadow.dart';
 
 class LoginComponent extends StatefulWidget {

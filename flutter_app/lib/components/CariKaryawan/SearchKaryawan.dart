@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login_project/components/TambahKaryawan/AddKaryawan.dart';
-import 'package:login_project/constant.dart';
+import 'package:login_project/utilities/constant.dart';
 import 'package:get/get.dart';
 import 'package:login_project/components/DataKaryawan/DataKaryawan.dart';
 

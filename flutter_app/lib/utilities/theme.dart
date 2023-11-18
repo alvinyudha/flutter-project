@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:login_project/constant.dart';
+import 'package:login_project/utilities/constant.dart';
 
 ThemeData theme() {
   return ThemeData(

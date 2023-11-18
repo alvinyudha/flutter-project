@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:login_project/components/Dashboard/Dashboard.dart';
 import 'package:login_project/components/PengajuanCuti/PengajuanCuti.dart';
-import 'package:login_project/constant.dart';
+import 'package:login_project/utilities/constant.dart';
 
 void main() {
   runApp(
@@ -22,9 +22,9 @@ class NavigationMenu extends StatelessWidget {
 
     return Scaffold(
       bottomNavigationBar: NavigationBarTheme(
-        data: NavigationBarThemeData(
+        data: const NavigationBarThemeData(
             labelTextStyle: MaterialStatePropertyAll(
-                const TextStyle(fontWeight: FontWeight.bold))),
+                TextStyle(fontWeight: FontWeight.bold))),
         child: Obx(
           () => NavigationBar(
             backgroundColor: Colors.white,

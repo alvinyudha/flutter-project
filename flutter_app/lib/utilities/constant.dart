@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../size_config.dart';
+import 'size_config.dart';
 
 const kPrimaryColor = Color(0xFF1DB9C3);
 const kSecondaryColor = Color(0xFF398AB9);
