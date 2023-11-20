@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:login_project/components/Dashboard/Dashboard.dart';
 import 'package:login_project/components/PengajuanCuti/PengajuanCuti.dart';
+import 'package:login_project/components/Personalization/profile.dart';
 import 'package:login_project/utilities/constant.dart';
 
 void main() {
@@ -83,6 +84,6 @@ class NavigationController extends GetxController {
     const PengajuanCutiPage(karyawanData: {}),
     Container(color: Colors.blue),
     Container(color: Colors.teal),
-    Container(color: Colors.purple),
+    const Profile(),
   ];
 }

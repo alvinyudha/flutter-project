@@ -31,37 +31,39 @@ class _PengajuanCutiPageState extends State<PengajuanCutiPage> {
             color: Color.fromARGB(255, 227, 227, 227),
             borderRadius: BorderRadius.circular(15.0),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildDataField('Nama', widget.karyawanData['Nama']),
-              buildDataField('NIP', widget.karyawanData['NIP']),
-              SizedBox(height: 20),
-              buildDateRangePicker(),
-              SizedBox(height: 20),
-              buildDurasiCuti(),
-              SizedBox(height: 20),
-              buildAlasanInput(),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  // Proses pengajuan cuti
-                  if (validateCutiLimit() && validateAlasan()) {
-                    // Jika jumlah cuti yang diajukan belum melebihi batasan per tahun
-                    // dan alasan sudah diisi
-                    submitPengajuanCuti();
-                  } else {
-                    // Tampilkan pesan kesalahan jika validasi tidak terpenuhi
-                    if (!validateCutiLimit()) {
-                      showCutiLimitExceededDialog();
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                buildDataField('Nama', widget.karyawanData['Nama']),
+                buildDataField('NIP', widget.karyawanData['NIP']),
+                SizedBox(height: 20),
+                buildDateRangePicker(),
+                SizedBox(height: 20),
+                buildDurasiCuti(),
+                SizedBox(height: 20),
+                buildAlasanInput(),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    // Proses pengajuan cuti
+                    if (validateCutiLimit() && validateAlasan()) {
+                      // Jika jumlah cuti yang diajukan belum melebihi batasan per tahun
+                      // dan alasan sudah diisi
+                      submitPengajuanCuti();
                     } else {
-                      showAlasanRequiredDialog();
+                      // Tampilkan pesan kesalahan jika validasi tidak terpenuhi
+                      if (!validateCutiLimit()) {
+                        showCutiLimitExceededDialog();
+                      } else {
+                        showAlasanRequiredDialog();
+                      }
                     }
-                  }
-                },
-                child: Text('Ajukan'),
-              ),
-            ],
+                  },
+                  child: Text('Ajukan'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
