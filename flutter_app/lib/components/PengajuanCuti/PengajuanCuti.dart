@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_project/utilities/constant.dart';
 
 class PengajuanCutiPage extends StatefulWidget {
   final Map<String, String> karyawanData;
@@ -21,14 +22,29 @@ class _PengajuanCutiPageState extends State<PengajuanCutiPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pengajuan Cuti'),
+        title: const Text('Pengajuan Cuti'),
+        backgroundColor: Colors.transparent,
+        toolbarHeight: 76,
+        elevation: 0.0,
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20)),
+              gradient: LinearGradient(
+                  colors: [kPrimaryColor, kSecondaryColor],
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter)),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Container(
           padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 227, 227, 227),
+            color: const Color.fromARGB(255, 227, 227, 227),
             borderRadius: BorderRadius.circular(15.0),
           ),
           child: SingleChildScrollView(
@@ -37,13 +53,13 @@ class _PengajuanCutiPageState extends State<PengajuanCutiPage> {
               children: [
                 buildDataField('Nama', widget.karyawanData['Nama']),
                 buildDataField('NIP', widget.karyawanData['NIP']),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 buildDateRangePicker(),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 buildDurasiCuti(),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 buildAlasanInput(),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     // Proses pengajuan cuti
@@ -60,7 +76,7 @@ class _PengajuanCutiPageState extends State<PengajuanCutiPage> {
                       }
                     }
                   },
-                  child: Text('Ajukan'),
+                  child: const Text('Ajukan'),
                 ),
               ],
             ),
@@ -78,7 +94,7 @@ class _PengajuanCutiPageState extends State<PengajuanCutiPage> {
         children: [
           Text(
             label,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -92,13 +108,13 @@ class _PengajuanCutiPageState extends State<PengajuanCutiPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           'Tanggal Mulai Cuti',
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         InkWell(
           onTap: () {
             // Tampilkan date picker saat tanggal mulai cuti di-tap
@@ -106,7 +122,7 @@ class _PengajuanCutiPageState extends State<PengajuanCutiPage> {
               context: context,
               initialDate: DateTime.now(),
               firstDate: DateTime.now(),
-              lastDate: DateTime.now().add(Duration(days: 365)),
+              lastDate: DateTime.now().add(const Duration(days: 365)),
             ).then((selectedDate) {
               if (selectedDate != null) {
                 setState(() {
@@ -120,25 +136,25 @@ class _PengajuanCutiPageState extends State<PengajuanCutiPage> {
             });
           },
           child: Container(
-            padding: EdgeInsets.all(12),
+            padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
               '${_selectedStartDate.toLocal()}'.split(' ')[0],
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
           ),
         ),
-        SizedBox(height: 16),
-        Text(
+        const SizedBox(height: 16),
+        const Text(
           'Tanggal Akhir Cuti',
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         InkWell(
           onTap: () {
             // Tampilkan date picker saat tanggal akhir cuti di-tap
@@ -146,7 +162,7 @@ class _PengajuanCutiPageState extends State<PengajuanCutiPage> {
               context: context,
               initialDate: _selectedStartDate,
               firstDate: _selectedStartDate,
-              lastDate: _selectedStartDate.add(Duration(days: 2)),
+              lastDate: _selectedStartDate.add(const Duration(days: 2)),
             ).then((selectedDate) {
               if (selectedDate != null) {
                 setState(() {
@@ -156,14 +172,14 @@ class _PengajuanCutiPageState extends State<PengajuanCutiPage> {
             });
           },
           child: Container(
-            padding: EdgeInsets.all(12),
+            padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               border: Border.all(color: Colors.grey),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
               '${_selectedEndDate.toLocal()}'.split(' ')[0],
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
           ),
         ),
@@ -176,7 +192,7 @@ class _PengajuanCutiPageState extends State<PengajuanCutiPage> {
 
     return Text(
       'Durasi Cuti: $durasiCuti Hari',
-      style: TextStyle(
+      style: const TextStyle(
         fontWeight: FontWeight.bold,
       ),
     );
@@ -185,7 +201,7 @@ class _PengajuanCutiPageState extends State<PengajuanCutiPage> {
   Widget buildAlasanInput() {
     return TextFormField(
       controller: _alasanController,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         hintText: 'Alasan Cuti',
         labelText: 'Alasan Cuti',
       ),
@@ -219,14 +235,14 @@ class _PengajuanCutiPageState extends State<PengajuanCutiPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Pengajuan Berhasil'),
-          content: Text('Pengajuan cuti Anda telah berhasil diajukan.'),
+          title: const Text('Pengajuan Berhasil'),
+          content: const Text('Pengajuan cuti Anda telah berhasil diajukan.'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );
@@ -239,14 +255,14 @@ class _PengajuanCutiPageState extends State<PengajuanCutiPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Batas Cuti Tahunan Tercapai'),
-          content: Text('Maaf, Anda telah mencapai batas cuti tahunan.'),
+          title: const Text('Batas Cuti Tahunan Tercapai'),
+          content: const Text('Maaf, Anda telah mencapai batas cuti tahunan.'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );
@@ -259,14 +275,14 @@ class _PengajuanCutiPageState extends State<PengajuanCutiPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Alasan Diperlukan'),
-          content: Text('Silakan isi alasan cuti sebelum mengajukan.'),
+          title: const Text('Alasan Diperlukan'),
+          content: const Text('Silakan isi alasan cuti sebelum mengajukan.'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );

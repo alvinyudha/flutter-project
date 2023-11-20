@@ -26,7 +26,9 @@ class Profile extends StatelessWidget {
                   end: Alignment.topCenter)),
         ),
       ),
-      body: const SingleChildScrollView(),
+      body: const SingleChildScrollView(
+        child: Padding(padding: EdgeInsets.all(15)),
+      ),
     );
   }
 }
