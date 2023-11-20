@@ -51,12 +51,6 @@ class NavigationMenu extends StatelessWidget {
                   label: 'Ajukan Cuti'),
               NavigationDestination(
                   icon: Icon(
-                    Iconsax.clipboard_text,
-                    color: kPrimaryColor,
-                  ),
-                  label: 'Absensi'),
-              NavigationDestination(
-                  icon: Icon(
                     Iconsax.calendar_add,
                     color: kPrimaryColor,
                   ),
@@ -83,7 +77,6 @@ class NavigationController extends GetxController {
     const DashboardPage(),
     const PengajuanCutiPage(karyawanData: {}),
     Container(color: Colors.blue),
-    Container(color: Colors.teal),
     const Profile(),
   ];
 }
