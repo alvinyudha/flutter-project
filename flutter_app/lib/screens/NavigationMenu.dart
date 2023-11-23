@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:login_project/components/Dashboard/Dashboard.dart';
 import 'package:login_project/components/PengajuanCuti/PengajuanCuti.dart';
+import 'package:login_project/components/PengajuanSurat/PengajuanSurat.dart';
 import 'package:login_project/components/Personalization/profile.dart';
 import 'package:login_project/utilities/constant.dart';
 
@@ -76,7 +77,7 @@ class NavigationController extends GetxController {
   final screens = [
     const DashboardPage(),
     const PengajuanCutiPage(karyawanData: {}),
-    Container(color: Colors.blue),
+    const PengajuanSuratPage(karyawanData: {},),
     const Profile(),
   ];
 }
