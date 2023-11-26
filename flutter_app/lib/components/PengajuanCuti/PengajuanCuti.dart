@@ -44,7 +44,7 @@ class _PengajuanCutiPageState extends State<PengajuanCutiPage> {
         child: Container(
           padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 227, 227, 227),
+            color: const Color(0xFFEEF5FF),
             borderRadius: BorderRadius.circular(15.0),
           ),
           child: SingleChildScrollView(
