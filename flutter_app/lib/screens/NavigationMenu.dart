@@ -77,7 +77,12 @@ class NavigationController extends GetxController {
   final screens = [
     const DashboardPage(),
     const PengajuanCutiPage(karyawanData: {}),
-    const PengajuanSuratPage(karyawanData: {},),
-    const Profile(),
+    const PengajuanSuratPage(karyawanData: {}),
+    const Profile(
+      userData: {},
+      username: '',
+      nip: '',
+      phoneNumber: '',
+    ),
   ];
 }
