@@ -7,7 +7,7 @@ class AuthServices {
       String name, String email, String password, String username) async {
     Map data = {
       "name": name,
-      "username": name,
+      "username": username,
       "email": email,
       "password": password,
     };

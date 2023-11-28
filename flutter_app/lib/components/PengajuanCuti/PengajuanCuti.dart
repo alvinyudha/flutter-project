@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_project/components/RiwayatCuti/RiwayatCuti.dart';
 import 'package:login_project/utilities/constant.dart';
 
 class PengajuanCutiPage extends StatefulWidget {
@@ -77,6 +78,22 @@ class _PengajuanCutiPageState extends State<PengajuanCutiPage> {
                     }
                   },
                   child: const Text('Ajukan'),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    // Navigasi ke halaman riwayat pengajuan cuti
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RiwayatPengajuanCutiPage(
+                          // Sertakan data riwayat pengajuan cuti
+                          riwayatPengajuanCuti: [], // Ganti dengan data riwayat cuti yang sesuai
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Text('Riwayat Pengajuan Cuti'),
                 ),
               ],
             ),
@@ -241,6 +258,29 @@ class _PengajuanCutiPageState extends State<PengajuanCutiPage> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
+                // Navigasi ke halaman riwayat pengajuan cuti dan sertakan data pengajuan cuti
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RiwayatPengajuanCutiPage(
+                      riwayatPengajuanCuti: [
+                        // Ganti dengan data pengajuan cuti yang sesuai
+                        {
+                          'tanggalPengajuan': DateTime.now(),
+                          'tanggalMulai': _selectedStartDate,
+                          'tanggalAkhir': _selectedEndDate,
+                          'durasiCuti': _selectedEndDate
+                                  .difference(_selectedStartDate)
+                                  .inDays +
+                              1,
+                          'status': 'Diajukan',
+                          'alasanCuti': _alasanController.text,
+                        },
+                        // ... tambahkan data pengajuan cuti lainnya jika diperlukan
+                      ],
+                    ),
+                  ),
+                );
               },
               child: const Text('OK'),
             ),
