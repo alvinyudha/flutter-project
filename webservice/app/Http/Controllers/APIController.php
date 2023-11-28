@@ -53,4 +53,62 @@ class APIController extends Controller
         $response = ['message' => 'Incorrect email or password'];
         return response()->json($response, 400);
     }
+
+    // GET USER
+    public function show()
+    {
+        try {
+            $user = auth()->user();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'User Login Details',
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'username' => $user->username,
+                    'email' => $user->email,
+                ],
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage(),
+            ], 500);
+        }
+    }
+    // REFRESH TOKEN
+    public function refreshToken(Request $request)
+    {
+        try {
+            $user = $request->user();
+            $user->tokens->each(function ($token) {
+                $token->delete();
+            });
+            $token = $user->createToken('api_token')->plainTextToken;
+
+            return response()->json(['access_token' => $token], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage(),
+            ], 500);
+        }
+    }
+
+
+    public function logout(Request $request)
+    {
+        try {
+            $request->user()->tokens()->delete();
+            return response()->json([
+                'message' => 'logout success'
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage(),
+            ], 500);
+        }
+    }
 }

@@ -24,7 +24,7 @@
 </head>
 
 <body class="app sidebar-mini rtl">
-    <header class="app-header"><a class="app-header__logo" href="index.html">Simpeg</a>
+    <header class="app-header"><a class="app-header__logo" href="index.html">Cuti Online</a>
         <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
         <ul class="app-nav">
             <li class="app-search">
@@ -74,8 +74,7 @@
                     <li><a class="treeview-item {{ request()->is('darah') ? 'active' : '' }}"
                             href="{{ route('darah.index') }}"><i class="icon fa fa-circle-o"></i> Golongan Darah</a>
                     </li>
-                    <li><a class="treeview-item {{ request()->is('keluarga') ? 'active' : '' }}"
-                            href="{{ route('keluarga.index') }}"><i class="icon fa fa-circle-o"></i> Keluarga</a></li>
+
                 </ul>
             </li>
             <li class="treeview {{ request()->is('pegawai', 'pegawai/*') ? 'is-expanded' : '' }}">
@@ -90,6 +89,16 @@
                     <li><a class="treeview-item {{ request()->is('pegawai/create') ? 'active' : '' }}"
                             href="{{ route('pegawai.create') }}" target="" rel="noopener"><i
                                 class="icon fa fa-circle-o"></i> Tambah Pegawai</a></li>
+                </ul>
+            </li>
+            <li class="treeview ">
+                <a class="app-menu__item" href="#" data-toggle="treeview">
+                    <i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">Cuti</span>
+                    <i class="treeview-indicator fa fa-angle-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a class="treeview-item " href="approve" target="" rel="noopener"><i
+                                class="icon fa fa-circle-o"></i> Approval</a></li>
                 </ul>
             </li>
             <li><a class="app-menu__item {{ request()->is('chart') ? 'active' : '' }}" href="{{ url('chart') }}"><i

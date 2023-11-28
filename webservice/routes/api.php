@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 Route::post('/auth/register', [APIController::class, 'register']);
 Route::post('/auth/login', [APIController::class, 'login']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware(['auth:sanctum'])->group(function () {
+    // API GET DATA LOGIN
+    Route::get('auth/show', [APIController::class, 'show']);
+    Route::post('auth/refresh', [APIController::class, 'refreshToken']);
+    Route::post('auth/logout', [APIController::class, 'logout']);
 });
