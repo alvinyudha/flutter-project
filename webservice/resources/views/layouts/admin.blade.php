@@ -24,7 +24,7 @@
 </head>
 
 <body class="app sidebar-mini rtl">
-    <header class="app-header"><a class="app-header__logo" href="index.html">Cuti Online</a>
+    <header class="app-header"><a class="app-header__logo" href="index.html">Cuti APPS</a>
         <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
         <ul class="app-nav">
             <li class="app-search">
@@ -101,10 +101,11 @@
                                 class="icon fa fa-circle-o"></i> Approval</a></li>
                 </ul>
             </li>
-            <li><a class="app-menu__item {{ request()->is('chart') ? 'active' : '' }}" href="{{ url('chart') }}"><i
+
+            {{-- <li><a class="app-menu__item {{ request()->is('chart') ? 'active' : '' }}" href="{{ url('chart') }}"><i
                         class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Charts</span></a>
-            </li>
-            </li>
+            </li> --}}
+            
             <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i
                         class="app-menu__icon fa fa-file-text"></i><span class="app-menu__label">Rekap Data</span><i
                         class="treeview-indicator fa fa-angle-right"></i></a>

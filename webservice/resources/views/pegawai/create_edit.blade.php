@@ -99,7 +99,7 @@
                     </div>                    
                 </div>  
                 
-                <div class="form-group row">
+               <div class="form-group row">
                   <label class="control-label col-md-3">Golongan Darah</label>
                     <div class="col-md-8">
                         <select class="form-control" name="gol_darah_id" id="exampleSelect1">
@@ -109,8 +109,9 @@
                             @endforeach                           
                         </select>
                     </div>                    
-                </div>  
-                <div class="form-group row">
+                </div>
+                  
+                {{--  <div class="form-group row">
                   <label class="control-label col-md-3">Status</label>
                     <div class="col-md-8">
                         <select class="form-control" name="skeluarga_id" id="exampleSelect1">
@@ -120,7 +121,8 @@
                             @endforeach                           
                         </select>
                     </div>                    
-                </div>  
+                </div>  --}}
+                
                 <div class="form-group row">
                   <label class="control-label col-md-3">Foto</label>
                   <div class="col-md-8">
