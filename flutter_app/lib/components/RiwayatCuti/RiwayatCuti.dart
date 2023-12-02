@@ -11,21 +11,30 @@ class RiwayatPengajuanCutiPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Riwayat Pengajuan Cuti'),
+        title: const Text('Riwayat Pengajuan'),
         backgroundColor: Colors.transparent,
         toolbarHeight: 76,
         elevation: 0.0,
-        automaticallyImplyLeading: false,
         centerTitle: true,
         flexibleSpace: Container(
           decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20)),
-              gradient: LinearGradient(
-                  colors: [kPrimaryColor, kSecondaryColor],
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter)),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
+            ),
+            gradient: LinearGradient(
+              colors: [kPrimaryColor, kSecondaryColor],
+              begin: Alignment.bottomCenter,
+              end: Alignment.topCenter,
+            ),
+          ),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            // Kembali ke halaman sebelumnya
+            Navigator.pop(context);
+          },
         ),
       ),
       body: Padding(
@@ -62,9 +71,12 @@ class RiwayatPengajuanCutiPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildDataField('Tanggal Pengajuan', data['tanggalPengajuan']),
-          buildDataField('Tanggal Mulai', data['tanggalMulai']),
-          buildDataField('Tanggal Akhir', data['tanggalAkhir']),
+          buildDataField('Tanggal Pengajuan',
+              '${data['tanggalPengajuan'].toLocal().toString().split('.')[0]}'),
+          buildDataField('Tanggal Mulai',
+              '${data['tanggalMulai'].toLocal().toString().split(' ')[0]}'),
+          buildDataField('Tanggal Akhir',
+              '${data['tanggalAkhir'].toLocal().toString().split(' ')[0]}'),
           buildDataField('Durasi Cuti', '${data['durasiCuti']} Hari'),
           buildDataField('Status', data['status']),
           buildDataField('Alasan Cuti', data['alasanCuti']),

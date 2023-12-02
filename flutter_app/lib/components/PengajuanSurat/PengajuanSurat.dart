@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login_project/utilities/constant.dart';
+import 'package:login_project/components/RiwayatCuti/RiwayatCuti.dart';
 
 class PengajuanSuratPage extends StatefulWidget {
   final Map<String, String> karyawanData;
@@ -63,15 +64,16 @@ class _PengajuanSuratPageState extends State<PengajuanSuratPage> {
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    if (validateForm()) {
+                    if (_validateForm()) {
                       submitPengajuanSurat();
                     } else {
-                      // Updated to pass the error message to the dialog
                       showValidationErrorDialog;
                     }
                   },
                   child: Text('Ajukan'),
                 ),
+                const SizedBox(height: 20),
+                _buildRiwayatButton(),
               ],
             ),
           ),
@@ -155,6 +157,7 @@ class _PengajuanSuratPageState extends State<PengajuanSuratPage> {
               if (selectedDate != null) {
                 setState(() {
                   _selectedStartDate = selectedDate;
+                  // Pastikan tanggal akhir izin tidak kurang dari tanggal mulai izin
                   if (_selectedEndDate.isBefore(_selectedStartDate)) {
                     _selectedEndDate = _selectedStartDate;
                   }
@@ -169,7 +172,7 @@ class _PengajuanSuratPageState extends State<PengajuanSuratPage> {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
-              '${_selectedStartDate.toLocal()}'.split(' ')[0],
+              '${_selectedStartDate.toLocal().toString().split(' ')[0]}',
               style: TextStyle(fontSize: 16),
             ),
           ),
@@ -186,17 +189,13 @@ class _PengajuanSuratPageState extends State<PengajuanSuratPage> {
           onTap: () {
             showDatePicker(
               context: context,
-              initialDate: DateTime.now(),
-              firstDate: DateTime.now(),
+              initialDate: _selectedStartDate,
+              firstDate: _selectedStartDate,
               lastDate: DateTime.now().add(Duration(days: 365)),
             ).then((selectedDate) {
               if (selectedDate != null) {
                 setState(() {
-                  _selectedStartDate = selectedDate;
-                  // Pastikan tanggal akhir cuti tidak kurang dari tanggal mulai cuti
-                  if (_selectedEndDate.isBefore(_selectedStartDate)) {
-                    _selectedEndDate = _selectedStartDate;
-                  }
+                  _selectedEndDate = selectedDate;
                 });
               }
             });
@@ -208,7 +207,7 @@ class _PengajuanSuratPageState extends State<PengajuanSuratPage> {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
-              '${_selectedEndDate.toLocal()}'.split(' ')[0],
+              '${_selectedEndDate.toLocal().toString().split(' ')[0]}',
               style: TextStyle(fontSize: 16),
             ),
           ),
@@ -247,14 +246,37 @@ class _PengajuanSuratPageState extends State<PengajuanSuratPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Pengajuan Berhasil'),
-          content: Text('Pengajuan surat izin Anda telah berhasil diajukan.'),
+          title: const Text('Pengajuan Berhasil'),
+          content: const Text('Pengajuan surat Anda telah berhasil diajukan.'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
+                // Navigasi ke halaman riwayat pengajuan cuti dan sertakan data pengajuan surat
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RiwayatPengajuanCutiPage(
+                      riwayatPengajuanCuti: [
+                        // Ganti dengan data pengajuan yang sesuai
+                        {
+                          'tanggalPengajuan': DateTime.now(),
+                          'tanggalMulai': _selectedStartDate,
+                          'tanggalAkhir': _selectedEndDate,
+                          'durasiCuti': _selectedEndDate
+                                  .difference(_selectedStartDate)
+                                  .inDays +
+                              1,
+                          'status': 'Diajukan',
+                          'alasanCuti': _alasanController.text,
+                        },
+                        // ... tambahkan data pengajuan lainnya jika ada
+                      ],
+                    ),
+                  ),
+                );
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );
@@ -262,20 +284,22 @@ class _PengajuanSuratPageState extends State<PengajuanSuratPage> {
     );
   }
 
-  bool validateForm() {
-    if (_selectedSurat != null && _alasanController.text.isEmpty) {
-      showValidationErrorDialog('Silakan isi alasan izin sebelum mengajukan.');
-      return false;
-    } else if (_selectedSurat == null && _alasanController.text.isNotEmpty) {
-      showValidationErrorDialog(
-          'Silakan pilih jenis surat sebelum mengajukan.');
-      return false;
-    } else if (_selectedSurat == null && _alasanController.text.isEmpty) {
-      showValidationErrorDialog(
-          'Silakan pilih jenis surat dan isi alasan izin sebelum mengajukan.');
-      return false;
-    }
-    return true;
+  Widget _buildRiwayatButton() {
+    return ElevatedButton(
+      onPressed: () {
+        // Navigasi ke halaman riwayat pengajuan cuti
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => RiwayatPengajuanCutiPage(
+              // Sertakan data riwayat pengajuan
+              riwayatPengajuanCuti: [], // Ganti dengan data yang sesuai
+            ),
+          ),
+        );
+      },
+      child: const Text('Riwayat Pengajuan'),
+    );
   }
 
   void showValidationErrorDialog(String message) {
@@ -296,5 +320,21 @@ class _PengajuanSuratPageState extends State<PengajuanSuratPage> {
         );
       },
     );
+  }
+
+  bool _validateForm() {
+    if (_selectedSurat != null && _alasanController.text.isEmpty) {
+      showValidationErrorDialog('Silakan isi alasan izin sebelum mengajukan.');
+      return false;
+    } else if (_selectedSurat == null && _alasanController.text.isNotEmpty) {
+      showValidationErrorDialog(
+          'Silakan pilih jenis surat sebelum mengajukan.');
+      return false;
+    } else if (_selectedSurat == null && _alasanController.text.isEmpty) {
+      showValidationErrorDialog(
+          'Silakan pilih jenis surat dan isi alasan izin sebelum mengajukan.');
+      return false;
+    }
+    return true;
   }
 }

@@ -159,7 +159,7 @@ class _PengajuanCutiPageState extends State<PengajuanCutiPage> {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
-              '${_selectedStartDate.toLocal()}'.split(' ')[0],
+              '${_selectedStartDate.toLocal().toString().split(' ')[0]}',
               style: const TextStyle(fontSize: 16),
             ),
           ),
@@ -195,7 +195,7 @@ class _PengajuanCutiPageState extends State<PengajuanCutiPage> {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
-              '${_selectedEndDate.toLocal()}'.split(' ')[0],
+              '${_selectedEndDate.toLocal().toString().split(' ')[0]}',
               style: const TextStyle(fontSize: 16),
             ),
           ),
