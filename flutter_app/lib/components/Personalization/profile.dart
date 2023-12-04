@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:login_project/utilities/constant.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   final Map userData;
   final String username;
   final String nip;
@@ -14,6 +14,57 @@ class Profile extends StatelessWidget {
     required this.nip,
     required this.phoneNumber,
   }) : super(key: key);
+
+  @override
+  _ProfileState createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  late TextEditingController usernameController;
+  late TextEditingController phoneNumberController;
+
+  @override
+  void initState() {
+    super.initState();
+    usernameController = TextEditingController(text: widget.username);
+    phoneNumberController = TextEditingController(text: widget.phoneNumber);
+  }
+
+  @override
+  void dispose() {
+    usernameController.dispose();
+    phoneNumberController.dispose();
+    super.dispose();
+  }
+
+  void _updateProfile() {
+    String newUsername = usernameController.text;
+    String newPhoneNumber = phoneNumberController.text;
+
+    // TODO: Simpan perubahan ke server atau penyimpanan lokal di sini
+
+    // Setelah perubahan disimpan, kita bisa memperbarui state atau memberikan notifikasi
+    setState(() {
+      // widget.username = newUsername; // Tidak bisa diubah karena final
+      // widget.phoneNumber = newPhoneNumber; // Tidak bisa diubah karena final
+    });
+  }
+
+  void _showEditDialog(String title, TextEditingController controller) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return EditProfileDialog(
+          title: title,
+          controller: controller,
+          onSave: () {
+            _updateProfile();
+            Navigator.pop(context);
+          },
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,13 +102,29 @@ class Profile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ProfileInfo(label: 'Nama Pengguna', value: username),
-                ProfileInfo(label: 'NIP', value: nip),
-                ProfileInfo(label: 'Nomor Telepon', value: phoneNumber),
+                ProfileInfo(
+                  label: 'Nama Pengguna',
+                  value: widget.username,
+                  onEdit: () {
+                    _showEditDialog('Nama Pengguna', usernameController);
+                  },
+                ),
+                ProfileInfo(
+                  label: 'NIP',
+                  value: widget.nip,
+                ),
+                ProfileInfo(
+                  label: 'Nomor Telepon',
+                  value: widget.phoneNumber,
+                  onEdit: () {
+                    _showEditDialog('Nomor Telepon', phoneNumberController);
+                  },
+                ),
                 SizedBox(height: 20),
                 InkWell(
                   onTap: () {
-                    showChangePasswordDialog(context);
+                    showChangePasswordDialog(
+                        context); // fungsi untuk mengubah kata sandi
                   },
                   child: ListTile(
                     leading: Icon(Icons.lock_open),
@@ -90,15 +157,15 @@ class Profile extends StatelessWidget {
       ),
     );
   }
+}
 
-  void showChangePasswordDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return ChangePasswordDialog();
-      },
-    );
-  }
+void showChangePasswordDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return ChangePasswordDialog();
+    },
+  );
 }
 
 class ChangePasswordDialog extends StatefulWidget {
@@ -223,31 +290,114 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
   }
 }
 
+class EditProfileDialog extends StatelessWidget {
+  final String title;
+  final TextEditingController controller;
+  final VoidCallback onSave;
+
+  const EditProfileDialog({
+    Key? key,
+    required this.title,
+    required this.controller,
+    required this.onSave,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('UBAH $title'),
+      content: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: title,
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text('Batal'),
+        ),
+        TextButton(
+          onPressed: onSave,
+          child: Text('Simpan'),
+        ),
+      ],
+    );
+  }
+}
+
 class ProfileInfo extends StatelessWidget {
   final String label;
   final String value;
+  final VoidCallback? onEdit;
 
   const ProfileInfo({
     Key? key,
     required this.label,
     required this.value,
+    this.onEdit,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            label,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+    return Container(
+      width: double.infinity,
+      child: Card(
+        elevation: 3,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start, // Tambahkan ini
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        label,
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 10), // Sesuaikan ketinggian ini
+                      Text(
+                        value,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                  if (onEdit != null)
+                    Align(
+                      // Tambahkan Align di sini
+                      alignment: Alignment.topRight,
+                      child: InkWell(
+                        onTap: onEdit,
+                        child: Text(
+                          'UBAH',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ],
           ),
-          Text(value),
-        ],
+        ),
       ),
     );
   }
