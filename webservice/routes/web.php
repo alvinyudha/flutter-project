@@ -42,11 +42,13 @@ Route::middleware(['cekLogin', 'cekRole:Admin'])->group(function () {
     Route::get('/cuti/{id}', [KonfirmasiController::class, 'show'])->name('cuti.show');
     Route::put('/cuti/{id}/approve', [KonfirmasiController::class, 'approve'])->name('cuti.approve');
     Route::put('/cuti/{id}/reject', [KonfirmasiController::class, 'reject'])->name('cuti.reject');
+    Route::delete('cuti/delete/{id}', [KonfirmasiController::class, 'deleteCuti'])->name('cuti.delete');
 
     Route::get('/surat', [KonfirmasiController::class, 'surat'])->name('surat.detail');
     Route::get('/surat/{id}', [KonfirmasiController::class, 'showSrt'])->name('surat.show');
     Route::put('/surat/{id}/approveSrt', [KonfirmasiController::class, 'approveSrt'])->name('surat.approve');
     Route::put('/surat/{id}/rejectSrt', [KonfirmasiController::class, 'rejectSrt'])->name('surat.reject');
+    Route::delete('surat/delete/{id}', [KonfirmasiController::class, 'deleteSurat'])->name('surat.delete');
 
 
     //pengalaman kerja
