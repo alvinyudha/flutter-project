@@ -37,10 +37,10 @@ class KeluargaController extends Controller
     public function store(Request $request)
     {
         $keluarga = new keluarga;
-        $keluarga-> nmstatusk = $request ->status;
-        $keluarga-> save();
+        $keluarga->nmstatusk = $request->status;
+        $keluarga->save();
 
-        return redirect ('keluarga')->with('success','Data berhasil disimpan');
+        return redirect('keluarga')->with('success', 'Data berhasil disimpan');
     }
 
     /**
@@ -74,11 +74,12 @@ class KeluargaController extends Controller
      */
     public function update(Request $request, Keluarga $keluarga)
     {
-        $keluarga-> nmstatusk = $request ->status;
-        $keluarga-> save();
+        $keluarga->nmstatusk = $request->status;
+        $keluarga->save();
 
-        return redirect ('keluarga')->with('success','Data berhasil disimpan');
+        return redirect('keluarga')->with('success', 'Data berhasil disimpan');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -90,6 +91,6 @@ class KeluargaController extends Controller
     {
         $keluarga->delete();
 
-        return redirect('keluarga')->with('error','Data berhasil dihapus');
+        return redirect('keluarga')->with('error', 'Data berhasil dihapus');
     }
 }

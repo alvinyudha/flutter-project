@@ -80,8 +80,6 @@ class RiwayatPengajuanCutiPage extends StatelessWidget {
           buildDataField('Durasi Cuti', '${data['durasiCuti']} Hari'),
           buildDataField('Status', data['status']),
           buildDataField('Alasan Cuti', data['alasanCuti']),
-          if (data['catatan'] != null)
-            buildDataField('Catatan', data['catatan']),
         ],
       ),
     );
