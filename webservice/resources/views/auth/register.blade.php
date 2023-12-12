@@ -1,52 +1,148 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+<!DOCTYPE html>
+<html lang="en">
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Register</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{{asset('nice/assets/img/favicon.png')}}" rel="icon">
+  <link href="{{asset('nice/assets/img/apple-touch-icon.png')}}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{{asset('nice/assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+  <link href="{{asset('nice/assets/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+  <link href="{{asset('nice/assets/vendor/boxicons/css/boxicons.min.css')}}" rel="stylesheet">
+  <link href="{{asset('nice/assets/vendor/quill/quill.snow.css')}}" rel="stylesheet">
+  <link href="{{asset('nice/assets/vendor/quill/quill.bubble.css')}}" rel="stylesheet">
+  <link href="{{asset('nice/assets/vendor/remixicon/remixicon.css')}}" rel="stylesheet">
+  <link href="{{asset('nice/assets/vendor/simple-datatables/style.css')}}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{{asset('nice/assets/css/style.css')}}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Updated: Sep 18 2023 with Bootstrap v5.3.2
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <main>
+    <div class="container">
+
+      <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+              {{-- <div class="d-flex justify-content-center py-4">
+                <a href="index.html" class="logo d-flex align-items-center w-auto">
+                  <img src="assets/img/logo.png" alt="">
+                  <span class="d-none d-lg-block">NiceAdmin</span>
+                </a>
+              </div><!-- End Logo --> --}}
+
+              <div class="card mb-3">
+
+                <div class="card-body">
+
+                  <div class="pt-4 pb-2">
+                    <h5 class="card-title text-center pb-0 fs-4">DAFTAR SEKARANG</h5>                 
+                  </div>
+                  <form action="{{route('register-proses')}}" method="post">
+                    @csrf
+                    <div class="row g-3 needs-validation" novalidate>
+                      <div class="col-12 mt-5">
+                        <label for="yourName" class="form-label">Name</label>
+                        <input type="text" name="name" class="form-control" value="{{old('name')}}" >
+                        @error('name')
+                        <small>{{$message}} </small>
+                        @enderror
+                      </div>
+
+                      <div class="col-12">
+                        <label for="yourUsername" class="form-label">Username</label>
+                        <div class="input-group has-validation">
+                          {{-- <span class="input-group-text" id="inputGroupPrepend">@</span> --}}
+                          <input type="text" name="username" class="form-control"value="{{old('username')}}">
+                        </div>
+                        @error('username')
+                        <small>{{$message}} </small>
+                        @enderror
+                      </div>
+                      
+                      <div class="col-12">
+                        <label for="yourEmail" class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control"value="{{old('email')}}">
+                        @error('email')
+                        <small>{{$message}} </small>
+                        @enderror
+                      </div>
+  
+  
+                      <div class="col-12">
+                        <label for="yourPassword" class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control">
+                        @error('password')
+                        <small>{{$message}} </small>
+                         @enderror
+                      </div>
+  
+                      {{-- <div class="col-12">
+                        <div class="form-check">
+                          <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required>
+                          <label class="form-check-label" for="acceptTerms">I agree and accept the <a href="#">terms and conditions</a></label>
+                          <div class="invalid-feedback">You must agree before submitting.</div>
+                        </div>
+                      </div> --}}
+                      <div class="col-12">
+                        <button class="btn btn-primary w-100" type="submit">Create Account</button>
+                      </div>
+                      <div class="col-12">
+                        <p class="small mb-0">Sudah punya akun? <a href="{{route('login')}}">Log in</a></p>
+                      </div>
+                    </div>
+                  </form>
+
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+      </section>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+    </div>
+  </main><!-- End #main -->
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+  <!-- Vendor JS Files -->
+  <script src="{{asset('nice/assets/vendor/apexcharts/apexcharts.min.js')}}"></script>
+  <script src="{{asset('nice/assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <script src="{{asset('nice/assets/vendor/chart.js/chart.umd.js')}}"></script>
+  <script src="{{asset('nice/assets/vendor/echarts/echarts.min.js')}}"></script>
+  <script src="{{asset('nice/assets/vendor/quill/quill.min.js')}}"></script>
+  <script src="{{asset('nice/assets/vendor/simple-datatables/simple-datatables.js')}}"></script>
+  <script src="{{asset('nice/assets/vendor/tinymce/tinymce.min.js')}}"></script>
+  <script src="{{asset('nice/assets/vendor/php-email-form/validate.js')}}"></script>
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+  <!-- Template Main JS File -->
+  <script src="{{asset('nice/assets/js/main.js')}}"></script>
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required />
+</body>
 
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ml-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+</html>

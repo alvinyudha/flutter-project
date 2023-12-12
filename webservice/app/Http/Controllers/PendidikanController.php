@@ -2,106 +2,99 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pegawai;
 use App\Models\Pendidikan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PendidikanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index($id)
+    public function index()
     {
-        $pegawai = Pegawai::whereId($id)->with('pendidikan')->first();
-        return  view('pendidikan.index', compact('pegawai'));
+        return view('index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function dataPendidikan()
+    {
+        $data = Pendidikan::get(); //mengambil database pada tabel pendidikan
+        return view('pendidikan.datapendidikan', compact('data')); //menampilkan data yang diambil pada tampilan view datauser
+    }
+
     public function create()
     {
-        //
+        return view('pendidikan.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $pendidikan = new Pendidikan;
-        $pendidikan-> t_pdk = $request ->t_pdk;
-        $pendidikan-> d_pdk = $request ->d_pdk;
-        $pendidikan-> pegawai_id = $request ->pegawai_id;
-        $pendidikan-> save();
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'nama' => 'required',
+                'tingkatan' => 'required',
+                'tahun_masuk' => 'required',
+                'tahun_keluar' => 'required'
+            ]
+        );
+        if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
 
-        return redirect ('/pegawai/'.$pendidikan->pegawai_id.'/pendidikan')->with('success','Data berhasil disimpan');
+        $data = [
+            'nama' => $request->nama,
+            'tingkatan' => $request->tingkatan,
+            'tahun_masuk' => $request->tahun_masuk,
+            'tahun_keluar' => $request->tahun_keluar
+        ];
+
+        Pendidikan::create($data);
+        return redirect()->route('pendidikan');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Pendidikan  $pendidikan
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Pendidikan $pendidikan)
+    // public function savePend(Request $request, Pendidikan $pendidikan)
+    // {
+    //     $pendidikan->update($request->all());
+    //     return redirect()->route('admin.pendidikan');
+    // }
+
+    // public function updatePend(Pendidikan $pendidikan)
+    // {
+    //     return view('pendidikan.updatePend', compact('pendidikan'));
+    // }
+
+    public function updatePend(Request $request, $id)
     {
-        //
+        $data = Pendidikan::find($id);
+        return view('pendidikan.updatePend', compact('data'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Pendidikan  $pendidikan
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Pendidikan $pendidikan)
+    public function savePend(Request $request, $id)
     {
-        // $pendidikan = Pendidikan::find($id);
-        return view('pendidikan.edit', compact('pendidikan'));
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'nama' => 'required',
+                'tingkatan' => 'required',
+                'tahun_masuk' => 'required',
+                'tahun_keluar' => 'required'
+            ]
+        );
+        if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
+
+        $data = [
+            'nama' => $request->nama,
+            'tingkatan' => $request->tingkatan,
+            'tahun_masuk' => $request->tahun_masuk,
+            'tahun_keluar' => $request->tahun_keluar
+        ];
+
+        Pendidikan::whereId($id)->update($data);
+        return redirect()->route('pendidikan');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Pendidikan  $pendidikan
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Pendidikan $pendidikan)
+    public function delete($id)
     {
-        // $pendidikan = \App\Pendidikan::findOrFail($id);
-        $pendidikan-> t_pdk = $request ->t_pdk;
-        $pendidikan-> d_pdk = $request ->d_pdk;
-        $pendidikan-> pegawai_id = $request ->pegawai_id;
-        $pendidikan-> save();
-
-        return redirect ('/pegawai/'.$pendidikan->pegawai_id.'/pendidikan')->with('success','Data berhasil disimpan');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Pendidikan  $pendidikan
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Pendidikan $pendidikan)
-    {
-        $pendidikan->delete();
-        return back()->with('error','Data berhasil dihapus');
-    }
-
-    public function pel($id)
-    {
-        $pegawai = Pegawai::find($id);
-        return view('pendidikan.create', ['pegawai' => $pegawai]);
+        $data = Pendidikan::find($id);
+        if ($data) {
+            $data->delete();
+        }
+        return redirect()->route('pendidikan');
     }
 }
