@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\AuthAPIController;
 use App\Http\Controllers\API\CutiAPI;
 use App\Http\Controllers\API\CutiAPIController;
+use App\Http\Controllers\API\SuratAPIController;
 use App\Http\Controllers\APIController;
 use App\Http\Controllers\Backend\ApiPendidikanController;
 use Illuminate\Http\Request;
@@ -24,6 +25,8 @@ Route::post('auth/login', [AuthAPIController::class, 'login']);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('cuti', [CutiAPIController::class, 'store']);
     Route::get('cuti/show', [CutiAPIController::class, 'show']);
+    Route::post('surat', [SuratAPIController::class, 'storeSurat']);
+    Route::get('surat/show', [SuratAPIController::class, 'showSurat']);
 });
 
 

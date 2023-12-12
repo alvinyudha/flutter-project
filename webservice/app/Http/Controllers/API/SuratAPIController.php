@@ -3,28 +3,29 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Cuti;
+use App\Models\Surat;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CutiAPIController extends Controller
+class SuratAPIController extends Controller
 {
-    public function show()
+    public function showSurat()
     {
         $user = auth()->user();
         // $cutis = Cuti::all();
-        $data = Cuti::where('user_id', $user->id)->get();
+        $data = Surat::where('user_id', $user->id)->get();
 
         return response()->json($data);
     }
 
 
 
-    public function store(Request $request)
+    public function storeSurat(Request $request)
     {
         // Validasi data pengajuan cuti
         $request->validate([
+            'jenis_surat' => 'required',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
             'alasan' => 'required'
@@ -44,16 +45,17 @@ class CutiAPIController extends Controller
         }
 
         // Simpan data pengajuan cuti ke dalam database
-        $cuti = new Cuti();
-        $cuti->nama = $user->name;
-        $cuti->tanggal_mulai = $request->tanggal_mulai;
-        $cuti->tanggal_selesai = $request->tanggal_selesai;
-        $cuti->alasan = $request->alasan;
-        $cuti->durasi = $selisihHari;
-        $cuti->status = 'pending';
-        $cuti->user_id = auth()->user()->id;
-        $cuti->save();
+        $surat = new Surat();
+        $surat->nama = $user->name;
+        $surat->jenis_surat = $request->jenis_surat;
+        $surat->tanggal_mulai = $request->tanggal_mulai;
+        $surat->tanggal_selesai = $request->tanggal_selesai;
+        $surat->alasan = $request->alasan;
+        $surat->durasi = $selisihHari;
+        $surat->status = 'pending';
+        $surat->user_id = auth()->user()->id;
+        $surat->save();
 
-        return response()->json(['message' => 'Cuti berhasil diajukan'], 201);
+        return response()->json(['message' => 'Surat berhasil diajukan'], 201);
     }
 }
