@@ -20,12 +20,12 @@
                             <!-- General Form Elements -->
                             <form method="POST" action="{{ route('surat.store') }}">
                                 @csrf
-                                <div class="row mb-3">
+                                {{-- <div class="row mb-3">
                                     <label for="nama" class="col-sm-2 col-form-label">Nama:</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="nama" id="nama" required>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="row mb-3">
                                     <label for="jenis_surat" class="col-sm-2 col-form-label">Jenis Surat:</label>
                                     <div class="col-sm-10">

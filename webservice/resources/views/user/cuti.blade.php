@@ -21,13 +21,13 @@
                             <form method="POST" action="{{ route('cuti.store') }}">
                                 @csrf
 
-                                <div class="row mb-3">
+                                {{-- <div class="row mb-3">
                                     <label for="nama" class="col-sm-2 col-form-label">Nama:</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="nama" id="nama" required>
                                     </div>
 
-                                </div>
+                                </div> --}}
                                 <div class="row mb-3">
                                     <label for="tanggal_mulai" class="col-sm-2 col-form-label">Tanggal Mulai:</label>
                                     <div class="col-sm-10">

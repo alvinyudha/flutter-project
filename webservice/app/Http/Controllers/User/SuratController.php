@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Surat;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SuratController extends Controller
 {
@@ -23,7 +24,6 @@ class SuratController extends Controller
     {
         // Validasi data pengajuan surat
         $request->validate([
-            'nama' => 'required',
             'jenis_surat' => 'required',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
@@ -42,8 +42,9 @@ class SuratController extends Controller
             return redirect()->back()->with('failed', 'Jumlah hari izin melebihi batasan yang diperbolehkan.');
         }
         // Simpan data pengajuan surat ke dalam database
+        $user = Auth::user();
         $surat = new Surat();
-        $surat->nama = $request->nama;
+        $surat->nama = $user->name;
         $surat->jenis_surat = $request->jenis_surat;
         $surat->tanggal_mulai = $request->tanggal_mulai;
         $surat->tanggal_selesai = $request->tanggal_selesai;

@@ -7,6 +7,7 @@ use App\Models\Cuti;
 use App\Models\KonfirmasiCuti;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CutiController extends Controller
 {
@@ -24,7 +25,6 @@ class CutiController extends Controller
     {
         // Validasi data pengajuan cuti
         $request->validate([
-            'nama' => 'required',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
             'alasan' => 'required'
@@ -41,9 +41,10 @@ class CutiController extends Controller
         if ($selisihHari > $batasanHariCuti) {
             return redirect()->back()->with('failed', 'Jumlah hari cuti melebihi batasan yang diperbolehkan.');
         }
+        $user = Auth::user();
         // Simpan data pengajuan cuti ke dalam database
         $cuti = new Cuti();
-        $cuti->nama = $request->nama;
+        $cuti->nama = $user->name;
         $cuti->tanggal_mulai = $request->tanggal_mulai;
         $cuti->tanggal_selesai = $request->tanggal_selesai;
         $cuti->alasan = $request->alasan;
