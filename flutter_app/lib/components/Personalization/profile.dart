@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login_project/utilities/constant.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {
   final Map userData;
@@ -36,6 +37,14 @@ class _ProfileState extends State<Profile> {
     phoneNumberController.dispose();
     super.dispose();
   }
+
+    Future<void> rmUser() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('id');
+    await prefs.remove('name');
+    print("menghapus user login");
+  }
+
 
   void _updateProfile() {
     String newUsername = usernameController.text;
@@ -133,6 +142,7 @@ class _ProfileState extends State<Profile> {
                 ),
                 InkWell(
                   onTap: () {
+                    rmUser();
                     Navigator.pop(context);
                   },
                   child: ListTile(

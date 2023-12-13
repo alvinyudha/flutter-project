@@ -22,12 +22,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('auth/register', [AuthAPIController::class, 'register']);
 Route::post('auth/login', [AuthAPIController::class, 'login']);
-Route::middleware(['auth:sanctum'])->group(function () {
+// Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('cuti', [CutiAPIController::class, 'store']);
     Route::get('cuti/show', [CutiAPIController::class, 'show']);
     Route::post('surat', [SuratAPIController::class, 'storeSurat']);
     Route::get('surat/show', [SuratAPIController::class, 'showSurat']);
-});
+// });
 
 
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:login_project/screens/NavigationMenu.dart';
 import 'package:login_project/utilities/constant.dart';
+import 'package:get/get.dart';
 
 class RiwayatPengajuanCutiPage extends StatelessWidget {
   final List<Map<String, dynamic>> riwayatPengajuanCuti;
@@ -30,10 +32,10 @@ class RiwayatPengajuanCutiPage extends StatelessWidget {
           ),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_upward),
           onPressed: () {
             // Kembali ke halaman sebelumnya
-            Navigator.pop(context);
+            Get.back();
           },
         ),
       ),

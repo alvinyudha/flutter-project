@@ -33,7 +33,6 @@
                                         <th scope="col">Status</th>
                                         <th scope="col">Detail</th>
                                         <th scope="col">Aksi</th>
-                                        <th scope="col">Hapus</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -54,40 +53,11 @@
                                                     <form action="{{ route('surat.reject', $s->id) }}" method="POST"
                                                         style="display: inline-block;">
                                                         @csrf @method('put') <button type="submit"
-                                                            class="btn btn-warning">Tolak</button>
+                                                            class="btn btn-danger">Tolak</button>
                                                     </form>
                                                 @endif
                                             </td>
-                                            <td>
-                                                <a data-bs-toggle="modal" data-bs-target="#modal-hapus{{ $s->id }}"
-                                                    class="btn btn-danger"><i class="fas bi-trash-fill"></i></a>
-                                            </td>
                                         </tr>
-                                        {{-- MODAL --}}
-                                        <div class="modal fade" id="modal-hapus{{ $s->id }}" tabindex="-1">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Hapus?</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        Yakin untuk menghapus??
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <form action="{{ route('surat.delete', ['id' => $s->id]) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="button" class="btn btn-primary"
-                                                                data-bs-dismiss="modal">Tidak</button>
-                                                            <button type="submit" class="btn btn-danger">Ya</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     @endforeach
                                 </tbody>
                             </table>

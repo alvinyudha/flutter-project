@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:login_project/utilities/constant.dart';
 import 'package:login_project/components/RiwayatCuti/RiwayatCuti.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class PengajuanSuratPage extends StatefulWidget {
   final Map<String, String> karyawanData;
@@ -17,6 +21,51 @@ class _PengajuanSuratPageState extends State<PengajuanSuratPage> {
   DateTime _selectedStartDate = DateTime.now();
   DateTime _selectedEndDate = DateTime.now();
   TextEditingController _alasanController = TextEditingController();
+  late SharedPreferences prefs;
+  String? nama;
+
+    @override
+  void initState() {
+    super.initState();
+    _loadSharedPreferences();
+  }
+
+    Future<void> _loadSharedPreferences() async {
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      // Setelah mendapatkan SharedPreferences, panggil setState agar widget diperbarui
+      nama = prefs.getString('name');
+    });
+  }
+
+
+    Future<void> pengajuanSurat() async {
+    int durasi = _selectedEndDate.difference(_selectedStartDate).inDays + 1;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final userid = prefs.getInt('id');
+    String urlEndPoint =
+        "http://127.0.0.1:8000/api/surat/";
+
+    Map<String, String?> queryParams = {
+      'nama': nama,
+      'jenis_surat': _selectedSurat,
+      'tanggal_mulai': DateFormat('yyyy/MM/dd').format(_selectedStartDate),
+      'tanggal_selesai': DateFormat('yyyy/MM/dd').format(_selectedEndDate),
+      'alasan': _alasanController.text,
+      'status': 'pending',
+      'durasi': durasi.toString(),
+      'user_id' : userid.toString(),
+    };
+
+    String queryString = Uri(queryParameters: queryParams).query;
+    String requestUrl =
+        urlEndPoint + '?' + queryString;
+
+    final response = await http.post(Uri.parse(requestUrl));
+    Map<String, dynamic> data = json.decode(response.body);
+
+    print(data);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +100,7 @@ class _PengajuanSuratPageState extends State<PengajuanSuratPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                buildDataField('Nama', widget.karyawanData['Nama']),
+                buildDataField('Nama', nama),
                 buildDataField('NIP', widget.karyawanData['NIP']),
                 SizedBox(height: 20),
                 buildSuratDropdown(),
@@ -238,6 +287,7 @@ class _PengajuanSuratPageState extends State<PengajuanSuratPage> {
   }
 
   void submitPengajuanSurat() {
+    pengajuanSurat();
     showSuccessDialog();
   }
 

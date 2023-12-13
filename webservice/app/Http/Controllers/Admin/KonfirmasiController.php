@@ -44,14 +44,6 @@ class KonfirmasiController extends Controller
 
         return redirect()->route('cuti.detail')->with('success', 'Cuti berhasil ditolak!');
     }
-    public function deleteCuti($id)
-    {
-        $data = Cuti::find($id);
-        if ($data) {
-            $data->delete();
-        }
-        return redirect()->route('cuti.detail')->with('success', 'Cuti berhasil dihapus!');;
-    }
 
     //surat izin 
     public function surat()
@@ -81,13 +73,5 @@ class KonfirmasiController extends Controller
         $surat->update(['status' => 'ditolak']);
 
         return redirect()->route('surat.detail')->with('success', 'Surat Izin berhasil ditolak!');
-    }
-    public function deleteSurat($id)
-    {
-        $data = Surat::find($id);
-        if ($data) {
-            $data->delete();
-        }
-        return redirect()->route('surat.detail')->with('success', 'Surat Izin berhasil dihapus!');;
     }
 }

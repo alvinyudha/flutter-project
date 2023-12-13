@@ -12,6 +12,7 @@ import 'package:login_project/screens/NavigationMenu.dart';
 import 'package:login_project/screens/RegisterScreen.dart';
 import 'package:login_project/utilities/size_config.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -33,6 +34,10 @@ class _LoginFormState extends State<LoginForm> {
     if (_email.isNotEmpty && _password.isNotEmpty) {
       http.Response response = await AuthServices.login(_email, _password);
       Map responseMap = jsonDecode(response.body);
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+            await prefs.setInt('id', responseMap['user']['id']);
+            await prefs.setString('name', responseMap['user']['name']);
+        print(prefs.getString('name'));
       if (response.statusCode == 200) {
         Get.to(const NavigationMenu());
       } else {

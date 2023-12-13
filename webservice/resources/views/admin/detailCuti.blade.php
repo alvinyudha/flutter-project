@@ -18,7 +18,7 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Detail Cuti</h5>
+                            <h5 class="card-title">Detai Cuti</h5>
 
 
                             <!-- Table with stripped rows -->
@@ -32,7 +32,6 @@
                                         <th scope="col">Status</th>
                                         <th scope="col">Detail</th>
                                         <th scope="col">Aksi</th>
-                                        <th scope="col">Hapus</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -52,40 +51,11 @@
                                                     <form action="{{ route('cuti.reject', $cuti->id) }}" method="POST"
                                                         style="display: inline-block;">
                                                         @csrf @method('put') <button type="submit"
-                                                            class="btn btn-warning">Tolak</button>
+                                                            class="btn btn-danger">Tolak</button>
                                                     </form>
                                                 @endif
                                             </td>
-                                            <td>
-                                                <a data-bs-toggle="modal" data-bs-target="#modal-hapus{{ $cuti->id }}"
-                                                    class="btn btn-danger"><i class="fas bi-trash-fill"></i></a>
-                                            </td>
                                         </tr>
-                                        {{-- MODAL --}}
-                                        <div class="modal fade" id="modal-hapus{{ $cuti->id }}" tabindex="-1">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Hapus?</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        Yakin untuk menghapus??
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <form action="{{ route('cuti.delete', ['id' => $cuti->id]) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="button" class="btn btn-primary"
-                                                                data-bs-dismiss="modal">Tidak</button>
-                                                            <button type="submit" class="btn btn-danger">Ya</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     @endforeach
                                 </tbody>
                             </table>
